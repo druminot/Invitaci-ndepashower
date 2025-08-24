@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Invitación Depa Shower — Antilhue 25, Chiguayante</title>
+  <meta name="description" content="Invitación al depa shower en Antilhue 25, Chiguayante. Incluye mapa, lista de regalos en Google Sheets y detalles útiles." />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg: #0f1226;
+      --bg-soft: #151936;
+      --card: #ffffff;
+      --text: #0c1020;
+      --muted: #5b6280;
+      --brand: #6753ff;
+      --brand-2: #7dd3fc;
+      --ok: #16a34a;
+      --danger: #ef4444;
+    }
+    [data-theme="dark"]{
+      --bg: #0b0e1b;
+      --bg-soft: #151936;
+      --card: #121527;
+      --text: #e8ecff;
+      --muted: #a3a8c2;
+      --brand: #8b7bff;
+      --brand-2: #93c5fd;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background: radial-gradient(1000px 600px at 10% 0%, #1a1f47 0%, var(--bg) 40%),
+                  radial-gradient(900px 600px at 100% 20%, #162c49 0%, var(--bg) 40%),
+                  var(--bg);
+      color: var(--text);
+      line-height:1.6;
+    }
+    .shell{max-width:1100px;margin:auto;padding:24px}
+    header{
+      position:relative;
+      border-radius:24px;
+      padding:48px 28px 56px;
+      overflow:hidden;
+      background: linear-gradient(135deg, rgba(103,83,255,.18), rgba(125,211,252,.18)),
+                  linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,0));
+      backdrop-filter: blur(8px);
+      box-shadow: 0 20px 60px rgba(0,0,0,.25), inset 0 0 0 1px rgba(255,255,255,.06);
+    }
+    header .badge{display:inline-block;padding:6px 12px;border-radius:999px;background:rgba(255,255,255,.12);color:#fff;font-weight:600;font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+    h1{margin:16px 0 8px;font-family: "Playfair Display", serif;font-weight:700;font-size: clamp(28px, 6vw, 56px);line-height:1.1;color:#fff}
+    .subtitle{color:#d8ddff;font-size: clamp(14px, 2.5vw, 18px)}
+    .actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
+    .btn{appearance:none;border:0;border-radius:14px;padding:12px 16px;font-weight:600;cursor:pointer;display:inline-flex;gap:10px;align-items:center;text-decoration:none}
+    .btn-primary{background: linear-gradient(135deg, var(--brand), var(--brand-2));color:#0b1020;box-shadow: 0 10px 24px rgba(103,83,255,.35)}
+    .btn-quiet{background: rgba(255,255,255,.08); color:#e9edff; border:1px solid rgba(255,255,255,.12)}
+    .btn-quiet:hover{background: rgba(255,255,255,.12)}
+    .grid{display:grid;grid-template-columns:1.25fr .75fr;gap:24px;margin-top:-28px}
+    @media (max-width: 900px){.grid{grid-template-columns:1fr}}
+
+    .card{background: var(--card); color: var(--text); border-radius: 18px; padding: 20px; box-shadow: 0 12px 30px rgba(0,0,0,.20), inset 0 0 0 1px rgba(255,255,255,.06)}
+    .card h2{margin:0 0 8px;font-size:22px}
+    .muted{color:var(--muted)}
+    .list{margin:12px 0 0; padding:0; list-style:none}
+    .list li{padding:8px 0; display:flex; gap:10px; align-items:flex-start}
+    .chip{display:inline-block;padding:6px 10px;border-radius:999px;background:rgba(103,83,255,.12);color:#3b82f6;font-weight:600;font-size:12px}
+    .kpis{display:grid;grid-template-columns:repeat(3, 1fr);gap:12px;margin-top:12px}
+    .kpi{background:rgba(255,255,255,.08);border-radius:12px;padding:10px;color:#e9edff;text-align:center}
+
+    .footer{margin:28px auto 8px; text-align:center; color:#c7cbea; font-size:13px}
+    .switch{position:absolute; top:16px; right:16px}
+
+    /* simple confetti-like dots */
+    .spark{position:absolute; border-radius:50%; opacity:.35; animation: float 16s ease-in-out infinite}
+    .spark.s1{width:14px;height:14px;background:#7dd3fc; top:14%; left:6%; animation-duration:22s}
+    .spark.s2{width:10px;height:10px;background:#a78bfa; top:8%; left:78%}
+    .spark.s3{width:8px;height:8px;background:#60a5fa; top:64%; left:92%; animation-duration:18s}
+    .spark.s4{width:12px;height:12px;background:#f472b6; top:72%; left:4%; animation-duration:24s}
+    @keyframes float{0%{transform:translateY(0)} 50%{transform:translateY(-20px)} 100%{transform:translateY(0)}}
+
+    a.inline{color:#4f9cff; text-decoration:none}
+    a.inline:hover{text-decoration:underline}
+    .map-embed{width:100%; border:0; border-radius:14px; height: 320px}
+    .two-col{display:grid; grid-template-columns: 1fr 1fr; gap: 16px}
+    @media (max-width: 700px){.two-col{grid-template-columns:1fr}}
+
+    .small{font-size:12px}
+  </style>
+</head>
+<body>
+  <div class="shell" id="app">
+    <header>
+      <span class="badge">¡Estás invitado!</span>
+      <h1>Depa Shower</h1>
+      <p class="subtitle">Nueva casa, nuevos recuerdos. Acompáñanos en Antilhue 25, Chiguayante.</p>
+
+      <div class="actions">
+        <a id="btnSheets" class="btn btn-primary" target="_blank" rel="noopener" href="#">
+          <!-- gift icon -->
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M20 12v8a2 2 0 0 1-2 2h-5v-10h7Z" fill="currentColor"/><path d="M11 22H6a2 2 0 0 1-2-2v-8h7v10Z" fill="currentColor"/><path d="M22 7h-3.17A3 3 0 0 0 16 3a3 3 0 0 0-2.83 2H12a3 3 0 0 0-2.83-2 3 3 0 0 0-2.83 4H3a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1Zm-6-2a1 1 0 1 1 0 2h-2.17A1 1 0 0 1 16 5ZM9 3a1 1 0 0 1 1 1 1 1 0 0 1-.83 1H7.99A1 1 0 0 1 9 3Z" fill="currentColor"/></svg>
+          Ver / reservar regalos
+        </a>
+
+        $1
+        <a id="btnWaze" class="btn btn-quiet" target="_blank" rel="noopener" href="#">
+          <!-- waze icon -->
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M19 11a7 7 0 1 0-13.94 1.2A4 4 0 0 0 5 21h1.5a1.5 1.5 0 0 0 1.5-1.5V18h1v1.5A1.5 1.5 0 0 0 11.5 21H13l1.2-.8c3.8-.2 6.8-3.4 6.8-7.2Z" fill="currentColor"/></svg>
+          Abrir en Waze
+        </a>
+
+        <button id="btnCopy" class="btn btn-quiet" type="button">
+          <!-- copy icon -->
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M16 1H4a2 2 0 0 0-2 2v12h2V3h12V1Zm3 4H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2Zm0 16H8V7h11v14Z" fill="currentColor"/></svg>
+          Copiar dirección
+        </button>
+
+        <a id="btnICS" class="btn btn-quiet" href="#" download>Agregar al calendario</a>
+
+        <button class="btn btn-quiet switch" id="toggleTheme" type="button" title="Cambiar tema">🌙</button>
+      </div>
+
+      <span class="spark s1"></span>
+      <span class="spark s2"></span>
+      <span class="spark s3"></span>
+      <span class="spark s4"></span>
+    </header>
+
+    <main class="grid" aria-label="Detalles del evento">
+      <section class="card" aria-labelledby="detalles">
+        <h2 id="detalles">Detalles</h2>
+        <p><strong>Dirección:</strong> <span id="addr">Antilhue 25, Chiguayante</span></p>
+        <p><strong>Fecha y hora:</strong> <span id="datetime">Por confirmar</span></p>
+        <p class="muted small">Consejo: si usarás apps de transporte, elige como destino <em>Antilhue 25, Chiguayante</em>. Al llegar, sigue la música 🎶.</p>
+
+        <div class="two-col" style="margin-top:10px">
+          <div class="card" style="background:rgba(103,83,255,.06); box-shadow:none">
+            <h2 style="margin-top:0">Cómo ayudar</h2>
+            <ul class="list">
+              <li>✅ Revisa la <span class="chip">lista de regalos</span> y marca lo que llevarás.</li>
+              <li>🧩 Si dudas, una <strong>gift card</strong> de tienda hogar siempre suma.</li>
+            </ul>
+          </div>
+          <div class="card" style="background:rgba(125,211,252,.08); box-shadow:none">
+            <h2 style="margin-top:0">Logística</h2>
+            <ul class="list">
+              <li>🚗 Estacionamiento en la calle (sugerido llegar temprano).</li>
+              <li>📷 Toma todas las fotos que quieras.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="kpis" aria-hidden="true">
+          <div class="kpi"><div class="muted small">Dirección</div><div style="font-weight:800">Antilhue 25</div></div>
+          <div class="kpi"><div class="muted small">Ciudad</div><div style="font-weight:800">Chiguayante</div></div>
+          <div class="kpi"><div class="muted small">Modo</div><div style="font-weight:800">Celebración 🎉</div></div>
+        </div>
+
+        <h2 style="margin-top:20px">Ubicación</h2>
+        <iframe class="map-embed" loading="lazy" allowfullscreen
+          src="https://www.google.com/maps?q=Antilhue+25,+Chiguayante&output=embed">
+        </iframe>
+      </section>
+
+      <aside class="card" aria-labelledby="regalos">
+        <h2 id="regalos">Lista de regalos</h2>
+        <p>Centraliza todo en un único lugar. Usa el Google Sheet para <strong>ver</strong> lo que hace falta y <strong>reservar</strong> lo que quieras llevar.</p>
+        <p class="muted small">Si abres desde el celular, el botón te llevará directo a la hoja.</p>
+        <a id="btnSheets2" class="btn btn-primary" target="_blank" rel="noopener" href="#">Abrir Google Sheet</a>
+        <p class="muted small" id="sheetUrlTxt" style="word-break: break-all; margin-top:8px"></p>
+
+        <hr style="border:none; border-top:1px solid rgba(0,0,0,.08); margin:18px 0">
+        <h2 style="margin-top:0">Confirmación</h2>
+        <p>Confirma asistencia con un toque.</p>
+        <div class="actions" style="gap:8px">
+          <a id="btnWhats" class="btn btn-quiet" target="_blank" rel="noopener" href="#">WhatsApp Daniel</a>
+          <a id="btnWhats2" class="btn btn-quiet" target="_blank" rel="noopener" href="#">WhatsApp Fran</a>
+        </div>
+        <p class="muted small" id="contactTxt"></p>
+      </aside>
+    </main>
+
+    <p class="footer">Hecho con 💙 para celebrar el nuevo hogar. <span class="muted">— Página 100% estática, lista para compartir.</span></p>
+  </div>
+
+  <!-- Datos editables (configuración rápida) -->
+  <script>
+    // ➜ PERSONALIZA estos tres datos y listo.
+    const SHEET_URL = "https://docs.google.com/spreadsheets/d/10Dgf_uG29y6eKhjKs-WNuaKkHuRBGSUG8k0RSJmHSWA/edit?gid=0#gid=0"; // 👈 pega aquí tu Google Sheet
+    const EVENT = {
+      title: "Depa Shower — Antilhue 25",
+      description: "Celebramos el nuevo hogar. Ven a pasar un buen momento.",
+      location: "Antilhue 25, Chiguayante",
+      // Formato ISO: "2025-09-06T18:00:00" (hora local). Déjalo vacío si aún no defines fecha/hora.
+      start: "2025-08-30T18:00:00", // ejemplo: "2025-09-06T18:00:00"
+      end: "2025-08-30T22:30:00"    // ejemplo: "2025-09-06T22:00:00"
+    };
+    // Medios de contacto para RSVPs (opcional)
+    const CONTACT = {
+      whatsapp: "+56991608871", // Daniel
+      whatsapp2: "+56954252645", // Fran
+      email: ""
+    };
+  </script>
+
+  <script>
+    (function init(){
+      const $ = s => document.querySelector(s);
+      const addr = "Antilhue 25, Chiguayante";
+      const wazeEl = document.querySelector('#btnWaze');
+      if (wazeEl) { wazeEl.href = 'https://waze.com/ul?q=' + encodeURIComponent(addr) + '&navigate=yes'; }
+
+      // Tema (oscuro/claro) persistente
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const saved = localStorage.getItem('theme');
+      const theme = saved || (prefersDark ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', theme);
+      const tBtn = $('#toggleTheme');
+      tBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+      tBtn.addEventListener('click', ()=>{
+        const cur = document.documentElement.getAttribute('data-theme');
+        const next = cur === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+        tBtn.textContent = next === 'dark' ? '☀️' : '🌙';
+      });
+
+      // Botón Google Sheets
+      const sheetBtns = ['#btnSheets', '#btnSheets2'].map($);
+      sheetBtns.forEach(b=> b.setAttribute('href', SHEET_URL));
+      $('#sheetUrlTxt').textContent = SHEET_URL;
+
+      // Copiar dirección
+      $('#btnCopy').addEventListener('click', async ()=>{
+        try{ await navigator.clipboard.writeText(addr); notify('Dirección copiada'); }
+        catch{ notify('Copia no disponible'); }
+      });
+
+      // Calendario (ICS) — si hay fecha
+      const btnICS = $('#btnICS');
+      if(EVENT.start && EVENT.end){
+        const ics = buildICS(EVENT);
+        const blob = new Blob([ics], {type:'text/calendar'});
+        const url = URL.createObjectURL(blob);
+        btnICS.href = url; btnICS.download = `${EVENT.title.replaceAll(' ','_')}.ics`;
+      } else {
+        btnICS.style.display = 'none';
+        $('#datetime').textContent = 'Por confirmar';
+      }
+
+      // Mostrar fecha/hora legible si existe
+      if(EVENT.start){
+        const fmt = new Date(EVENT.start).toLocaleString('es-CL', {dateStyle:'full', timeStyle:'short'});
+        $('#datetime').textContent = fmt;
+      }
+
+      // Confirmación (WhatsApp)
+      const msg = encodeURIComponent(`Hola! Confirmo asistencia al depa shower en ${addr}`);
+      if(CONTACT.whatsapp && CONTACT.whatsapp.startsWith('+')){
+        const n = CONTACT.whatsapp.replace('+','');
+        const el = document.querySelector('#btnWhats');
+        if (el) el.href = `https://wa.me/${n}?text=${msg}`;
+        document.querySelector('#contactTxt').textContent = `WhatsApp Daniel: ${CONTACT.whatsapp}`;
+      } else { const el = document.querySelector('#btnWhats'); if (el) el.style.display='none'; }
+
+      if(CONTACT.whatsapp2 && CONTACT.whatsapp2.startsWith('+')){
+        const n2 = CONTACT.whatsapp2.replace('+','');
+        const el2 = document.querySelector('#btnWhats2');
+        if (el2) el2.href = `https://wa.me/${n2}?text=${msg}`;
+        const ct = document.querySelector('#contactTxt');
+        ct.textContent += (ct.textContent ? ' · ' : '') + `WhatsApp Fran: ${CONTACT.whatsapp2}`;
+      } else { const el2 = document.querySelector('#btnWhats2'); if (el2) el2.style.display='none'; }
+
+      function notify(text){
+        const n = document.createElement('div');
+        n.textContent = text;
+        n.style.cssText = `position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;padding:10px 14px;border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.35);z-index:9999;`;
+        document.body.appendChild(n); setTimeout(()=> n.remove(), 1600);
+      }
+
+      function buildICS(e){
+        // Convierte "YYYY-MM-DDTHH:mm:ss" local a formato "YYYYMMDDTHHmmss" en UTC para ICS
+        const toICS = iso => {
+          const d = new Date(iso);
+          const pad = n => String(n).padStart(2,'0');
+          return d.getUTCFullYear()+pad(d.getUTCMonth()+1)+pad(d.getUTCDate())+'T'+pad(d.getUTCHours())+pad(d.getUTCMinutes())+pad(d.getUTCSeconds())+'Z';
+        };
+        const dtStart = toICS(e.start);
+        const dtEnd = toICS(e.end);
+        const uid = (Math.random()+1).toString(36).slice(2)+"@invita.local";
+        return `BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//Invitacion//DepaShower//ES\nBEGIN:VEVENT\nUID:${uid}\nDTSTAMP:${dtStart}\nDTSTART:${dtStart}\nDTEND:${dtEnd}\nSUMMARY:${escapeICS(e.title)}\nDESCRIPTION:${escapeICS(e.description)}\nLOCATION:${escapeICS(e.location)}\nEND:VEVENT\nEND:VCALENDAR`;
+      }
+      function escapeICS(s){
+        return String(s).replace(/\\/g,'\\\\').replace(/\n/g,'\\n').replace(/,/g,'\\,').replace(/;/g,'\\;');
+      }
+    })();
+  </script>
+
+  <!-- Datos estructurados para mejores previews (opcional) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Event",
+    "name": "Depa Shower — Antilhue 25",
+    "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+    "eventStatus": "https://schema.org/EventScheduled",
+    "location": {
+      "@type": "Place",
+      "name": "Antilhue 25",
+      "address": {"@type": "PostalAddress", "streetAddress": "Antilhue 25", "addressLocality": "Chiguayante", "addressCountry": "CL"}
+    },
+    "description": "Celebramos el nuevo hogar. Ven a pasar un buen momento.",
+    "startDate": "2025-08-30T18:00:00",
+    "endDate": "2025-08-30T22:30:00"
+  }
+  </script>
+</body>
+</html>
